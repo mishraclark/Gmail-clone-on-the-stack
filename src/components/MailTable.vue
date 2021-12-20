@@ -9,11 +9,11 @@
           <input class="w-6 h-6 border align-middle px-10 relative rounded-sm bg-white cursor-pointer" type="checkbox" />
         </td>
         <td class="border-b p-1 text-left">{{email.from}}</td>
-        <td>
+        <td class="border-b p-1 text-left">
           <p class="overflow-hidden max-h-5"><strong>{{email.subject}}</strong> - {{email.body}}</p>
         </td>
         <td class="border-b p-1 text-left w-32">{{format(new Date(email.sentAt), 'MMM do yyyy')}}</td>
-        <td><button @click="email.archived = true">Archive</button></td>
+        <td class="border-b p-1 text-left"><button class="text-base p-2 rounded mx-1 my-2" @click="email.archived = true">Archive</button></td>
       </tr>
     </tbody>
   </table>
