@@ -1,18 +1,18 @@
 <template>
-  <table>
+  <table class="max-w-full m-auto border-collapse">
     <tbody>
       <tr v-for="email in unarchivedEmails"
           :key="email.id"
-          :class="['clickable', email.read ? 'read' : '']"
+          class="cursor-pointer h-10"
           @click="email.read = true">
-        <td>
-          <input type="checkbox" />
+        <td class="border-b border-t p-1 text-left">
+          <input class="w-6 h-6 border align-middle px-10 relative rounded-sm bg-white cursor-pointer" type="checkbox" />
         </td>
-        <td>{{email.from}}</td>
+        <td class="border-b p-1 text-left">{{email.from}}</td>
         <td>
-          <p><strong>{{email.subject}}</strong> - {{email.body}}</p>
+          <p class="overflow-hidden max-h-5"><strong>{{email.subject}}</strong> - {{email.body}}</p>
         </td>
-        <td class="date">{{format(new Date(email.sentAt), 'MMM do yyyy')}}</td>
+        <td class="border-b p-1 text-left w-32">{{format(new Date(email.sentAt), 'MMM do yyyy')}}</td>
         <td><button @click="email.archived = true">Archive</button></td>
       </tr>
     </tbody>
