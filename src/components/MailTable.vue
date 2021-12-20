@@ -1,19 +1,28 @@
 <template>
+<div class="float-right align-middle m-5">
+<button class="text-base p-2 rounded mx-1 my-2 bg-slate-200 hover:bg-yellow-300" 
+          @click="selectScreen('inbox')"
+          :disabled="selectedScreen == 'inbox'">Inbox</button>
+  <button class="text-base p-2 rounded mx-1 my-2 bg-slate-200 hover:bg-yellow-300"
+          @click="selectScreen(archive)"
+          :disabled="selectedScreen == 'archive'">Archived</button>
+</div>
   <table class="max-w-full m-auto border-collapse">
     <tbody>
       <tr v-for="email in unarchivedEmails"
           :key="email.id"
-          class="cursor-pointer h-10"
-          @click="email.read = true">
+          :class="['cursor-pointer', email.read ? 'bg-gray-300' : 'bg-white']"
+          @click="email.read = !email.read"
+          >
         <td class="border-b border-t p-1 text-left">
-          <input class="w-6 h-6 border align-middle px-10 relative rounded-sm bg-white cursor-pointer" type="checkbox" />
+          <input class="hover:border-2 w-6 h-6 border align-middle px-10 relative rounded-sm bg-white cursor-pointer" type="checkbox" />
         </td>
         <td class="border-b p-1 text-left">{{email.from}}</td>
         <td class="border-b p-1 text-left">
-          <p class="overflow-hidden max-h-5"><strong>{{email.subject}}</strong> - {{email.body}}</p>
+          <p class="overflow-hidden max-h-5 px-5"><strong>{{email.subject}}</strong> - {{email.body}}</p>
         </td>
         <td class="border-b p-1 text-left w-32">{{format(new Date(email.sentAt), 'MMM do yyyy')}}</td>
-        <td class="border-b p-1 text-left"><button class="text-base p-2 rounded mx-1 my-2" @click="email.archived = true">Archive</button></td>
+        <td class="border-b p-1 text-left" ><button class="text-base p-2 rounded mx-1 my-2 bg-slate-200 hover:bg-yellow-300" @click="email.archived = true">Archive</button></td>
       </tr>
     </tbody>
   </table>
@@ -41,6 +50,9 @@
         return this.sortedEmails.filter(e => !e.archived)
       }
     },
+      emailIsRead(id) {
+        return (email.read)
+      },
     methods: {
       readEmail(email) {
         email.read = true
