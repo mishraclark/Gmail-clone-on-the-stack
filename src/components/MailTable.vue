@@ -1,9 +1,9 @@
 <template>
 <div class="float-right align-middle m-5">
-<button class="text-base p-2 rounded mx-1 my-2 bg-slate-200 hover:bg-yellow-300" 
+<button class="btn" 
           @click="selectScreen('inbox')"
           :disabled="selectedScreen == 'inbox'">Inbox</button>
-  <button class="text-base p-2 rounded mx-1 my-2 bg-slate-200 hover:bg-yellow-300"
+  <button class="btn"
           @click="selectScreen(archive)"
           :disabled="selectedScreen == 'archive'">Archived</button>
 </div>
@@ -22,11 +22,13 @@
           <p class="overflow-hidden max-h-5 px-5"><strong>{{email.subject}}</strong> - {{email.body}}</p>
         </td>
         <td class="border-b p-1 text-left w-32">{{format(new Date(email.sentAt), 'MMM do yyyy')}}</td>
-        <td class="border-b p-1 text-left" ><button class="text-base p-2 rounded mx-1 my-2 bg-slate-200 hover:bg-yellow-300" @click="email.archived = true">Archive</button></td>
+        <td class="border-b p-1 text-left" ><button class="btn" @click="email.archived = true">Archive</button></td>
       </tr>
     </tbody>
   </table>
-  <MailView v-if="openedEmail" :email="openedEmail" />
+   <ModalView v-if="openedEmail" @closeModal="openedEmail = null">
+    <MailView :email="openedEmail" />
+  </ModalView>
 </template>
 
 <script>
@@ -34,6 +36,7 @@
   import axios from 'axios';
   import { ref } from 'vue';
   import MailView from './MailView.vue';
+  import ModalView from './ModalView.vue';
 
   export default {
     async setup(){
@@ -45,7 +48,8 @@
       }
     },
      components: {
-      MailView
+      MailView,
+      ModalView
     },
     computed: {
       sortedEmails() {
