@@ -1,9 +1,28 @@
 <template>
   <div class="w-full m-auto text-left pb-2">
+    <span>
     <input type="checkbox"
            :checked="allEmailsSelected"
-           :class="['m-1', 'hover:border-2', 'w-6', 'h-6', 'border', 'align-middle', 'px-10', 'relative', 'rounded-sm', 'bg-white', 'cursor-pointer',  someEmailsSelected ? 'bg-gray-500' : '']"
+           :class="['m-1', 'hover:border-2', 'w-6', 'h-6', 'border', 'align-middle', 'px-10', 'relative', 'rounded-sm', 'cursor-pointer',  someEmailsSelected ? 'bg-blue-300' : '']"
            @click="bulkSelect" />
+    </span>
+ <span>
+      <button class="btn" 
+              @click="emailSelection.markRead"
+              :disabled="[...emailSelection.emails].every(e => e.read)">
+        Mark Read
+      </button>
+      <button class="btn" 
+              @click="emailSelection.markUnread"
+              :disabled="[...emailSelection.emails].every(e => !e.read)">
+        Mark Unread
+      </button>
+      <button class="btn" 
+              @click="emailSelection.archive"
+              :disabled="numberSelected === 0">
+        Archive
+      </button>
+    </span>
   </div>
 </template>
 
@@ -14,7 +33,7 @@
     setup(props){
       let emailSelection = useEmailSelection();
       let numberSelected = computed(() => emailSelection.emails.size)
-      let numberEmails = props.emails.length
+      let numberEmails = computed(() => props.emails.length)
       let allEmailsSelected = computed(() => numberSelected.value === numberEmails)
       let someEmailsSelected = computed(() => {
         return numberSelected.value > 0 && numberSelected.value < numberEmails
@@ -29,7 +48,9 @@
       return {
         allEmailsSelected,
         someEmailsSelected,
-        bulkSelect
+        bulkSelect,
+        emailSelection,
+        numberSelected
       }
     },
     props: {

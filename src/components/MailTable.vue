@@ -7,10 +7,10 @@
           @click="selectScreen(archive)"
           :disabled="selectedScreen == 'archive'">Archived</button>
 </div>
-<BulkActionBar :emails="unarchivedEmails" />
+<BulkActionBar :emails="filteredEmails" />
   <table class="max-w-full m-auto border-collapse">
     <tbody>
-      <tr v-for="email in unarchivedEmails"
+      <tr v-for="email in filteredEmails"
           :key="email.id"
           :class="['cursor-pointer', email.read ? 'bg-gray-300' : 'bg-white']"
           >
@@ -38,8 +38,8 @@
   import MailView from './MailView.vue';
   import ModalView from './ModalView.vue';
   import BulkActionBar from './BulkActionBar.vue';
-  import { ref } from 'vue';
-  import { useEmailSelection } from '../composables/use-email-selection';
+  import { reactive, ref } from 'vue';
+  import useEmailSelection from '../composables/use-email-selection';
   export default {
     async setup(){
       let {data: emails} = await axios.get('http://localhost:3000/emails')
@@ -47,13 +47,14 @@
         emailSelection: useEmailSelection(),
         format,
         emails: ref(emails),
-        openedEmail: ref(null)
+        openedEmail: ref(null),
+        selectedScreen: ref('inbox')
       }
     },
     components: {
       MailView,
       ModalView,
-      BulkActionBar
+      BulkActionBar,
     },
     computed: {
       sortedEmails() {
@@ -61,11 +62,19 @@
           return e1.sentAt < e2.sentAt ? 1 : -1
         })
       },
-      unarchivedEmails() {
-        return this.sortedEmails.filter(e => !e.archived)
+      filteredEmails() {
+        if(this.selectedScreen == 'inbox') {
+          return this.sortedEmails.filter(e => !e.archived)
+        } else {
+          return this.sortedEmails.filter(e => e.archived)
+        }
       }
     },
     methods: {
+      selectScreen(newScreen) {
+        this.selectedScreen = newScreen
+        this.emailSelection.clear()
+      },
       openEmail(email) {
         this.openedEmail = email
         if(email) {
@@ -84,7 +93,7 @@
         if(save) { this.updateEmail(email) }
         if(closeModal) { this.openedEmail = null }
         if(changeIndex) {
-          let emails = this.unarchivedEmails
+          let emails = this.filteredEmails
           let currentIndex = emails.indexOf(this.openedEmail)
           let newEmail = emails[currentIndex + changeIndex]
           this.openEmail(newEmail)
