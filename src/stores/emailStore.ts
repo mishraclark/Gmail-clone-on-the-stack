@@ -1,3 +1,4 @@
+import { Email } from './emailStore';
 import { defineStore } from 'pinia'
 import { reactive, ref } from 'vue'
 import axios from 'axios'
@@ -21,12 +22,9 @@ export const emailStore = defineStore('main', {
     state: () => ({
         emails: []
        } as RootState),
-      
       actions: {
-        async callEmails(): Promise<Array<Email>> {
-            let response = await axios.get('http://localhost:3000/emails');
-            response.data = this.emails;
-            return response.data
+        async callEmails() {
+            this.emails = (await axios.get('http://localhost:3000/emails')).data
           }
         }
 })

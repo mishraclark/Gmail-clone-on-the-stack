@@ -46,7 +46,7 @@
     setup(){
       const store = emailStore()
       const {emails} = storeToRefs(store)
-      store.callEmails()
+      store.callEmails();
       return {
         emailSelection: useEmailSelection(),
         format,
