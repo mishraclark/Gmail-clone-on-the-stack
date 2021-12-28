@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "axios": "^0.24.0",
+    "cypress": "^9.2.0",
     "date-fns": "^2.27.0",
     "vue": "^3.2.25"
   },
