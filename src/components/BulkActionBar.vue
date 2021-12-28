@@ -2,8 +2,9 @@
   <div class="w-full m-auto text-left pb-2">
     <span>
     <input type="checkbox"
+            class="m-1 hover:border-2 w-6 h-6 border align-middle px-10 relative rounded-sm cursor-pointer"
            :checked="allEmailsSelected"
-           :class="['m-1', 'hover:border-2', 'w-6', 'h-6', 'border', 'align-middle', 'px-10', 'relative', 'rounded-sm', 'cursor-pointer',  someEmailsSelected ? 'bg-blue-300' : '']"
+           :class="someEmailsSelected ? 'bg-blue-300' : ''"
            @click="bulkSelect" />
     </span>
  <span>
@@ -36,7 +37,7 @@
       let numberEmails = computed(() => props.emails.length)
       let allEmailsSelected = computed(() => numberSelected.value === numberEmails.value)
       let someEmailsSelected = computed(() => {
-        return numberSelected.value > 0 && numberSelected.value < numberEmails
+        return numberSelected.value > 0 && numberSelected.value < numberEmails.value
       })
       let bulkSelect = function(){
         if(allEmailsSelected.value) {

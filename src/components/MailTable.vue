@@ -40,9 +40,13 @@
   import BulkActionBar from './BulkActionBar.vue';
   import { reactive, ref } from 'vue';
   import useEmailSelection from '../composables/use-email-selection';
+  import { emailStore } from '../stores/emailStore';
+  import { storeToRefs } from 'pinia';
   export default {
-    async setup(){
-      let {data: emails} = await axios.get('http://localhost:3000/emails')
+    setup(){
+      const store = emailStore()
+      const {emails} = storeToRefs(store)
+      store.callEmails()
       return {
         emailSelection: useEmailSelection(),
         format,

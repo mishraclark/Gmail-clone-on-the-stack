@@ -1,3 +1,4 @@
+import { Email } from './../stores/emailStore';
 
 import { reactive } from 'vue';
 import axios from 'axios';
@@ -5,7 +6,7 @@ import axios from 'axios';
 let emails = reactive(new Set())
 
 export const useEmailSelection = function(){
-  let toggle = function(email) {
+  let toggle = function(email: Email) {
     if(emails.has(email)) {
       emails.delete(email)
     } else {
@@ -15,7 +16,7 @@ export const useEmailSelection = function(){
   let clear = () => {
     emails.clear()
   }
-  let addMultiple = (newEmails) => {
+  let addMultiple = (newEmails: Email[]) => {
     newEmails.forEach((email) => {
       emails.add(email)
     })

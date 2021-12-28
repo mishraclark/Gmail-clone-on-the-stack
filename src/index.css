@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .btn {
-    @apply text-base p-2 rounded mx-1 my-2 bg-slate-200 hover:bg-yellow-300
+    @apply cursor-pointer text-base p-2 rounded mx-1 my-2 bg-slate-200 hover:bg-yellow-300
 }
 
 .checkbox {
