@@ -28,8 +28,8 @@
 </template>
 
 <script>
-  import { useEmailSelection } from '../composables/use-email-selection';
   import { computed } from 'vue'
+  import useEmailSelection from '../composables/use-email-selection';
   export default {
     setup(props){
       let emailSelection = useEmailSelection();
