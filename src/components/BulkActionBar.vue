@@ -4,7 +4,6 @@
     <input type="checkbox"
             class="m-1 hover:border-2 w-6 h-6 border align-middle px-10 relative rounded-sm cursor-pointer"
            :checked="store.allEmailsSelected"
-           :class="store.someEmailsSelected ? 'bg-blue-300' : ''"
            @click="store.bulkSelect" />
     </span>
  <span>

@@ -2,10 +2,10 @@
 <div class="float-right align-middle m-5">
 <button class="btn" 
           @click="store.selectScreen('inbox')"
-          :disabled="store.selectedScreen == 'inbox'">Inbox</button>
+          :disabled="selectedScreen == 'inbox'">Inbox</button>
   <button class="btn"
           @click="store.selectScreen('archive')"
-          :disabled="store.selectedScreen == 'archive'">Archived</button>
+          :disabled="selectedScreen == 'archive'">Archived</button>
 </div>
 <BulkActionBar :emails="store.filteredEmails" />
   <table class="max-w-full m-auto border-collapse">

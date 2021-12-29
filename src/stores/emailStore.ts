@@ -43,10 +43,7 @@ export const emailStore = defineStore('main', {
       },
       numberSelected: (state) => { return state.emailSelection.length },
       numberEmails: (state) => { return state.emails.length},
-      allEmailsSelected() {return this.numberSelected === this.numberEmails && this.numberEmails.value > 0},
-      someEmailsSelected() {
-        return this.numberSelected.value > 0 && this.numberSelected.value < this.numberEmails.value
-      },
+      allEmailsSelected() {return this.numberSelected === this.numberEmails},
     },
       actions: {
         async callEmails() {
@@ -86,7 +83,7 @@ export const emailStore = defineStore('main', {
           },
           toggle(email: Email) {
               if(this.emailSelection.includes(email)) {
-                this.emailSelection.filter(e => !email.id )
+                this.emailSelection.filter(e => !email )
               } else {
                 this.emailSelection.push(email)
               }
