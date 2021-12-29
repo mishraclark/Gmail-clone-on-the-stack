@@ -40,9 +40,14 @@ export const emailStore = defineStore('main', {
           } else {
             return this.sortedEmails.filter(e => e.archived)
           }
-      }
-      }, 
-
+      },
+      numberSelected: (state) => { return state.emailSelection.length },
+      numberEmails: (state) => { return state.emails.length},
+      allEmailsSelected() {return this.numberSelected === this.numberEmails && this.numberEmails.value > 0},
+      someEmailsSelected() {
+        return this.numberSelected.value > 0 && this.numberSelected.value < this.numberEmails.value
+      },
+    },
       actions: {
         async callEmails() {
             this.emails = (await axios.get('http://localhost:3000/emails')).data
@@ -75,6 +80,7 @@ export const emailStore = defineStore('main', {
               this.openEmail(newEmail)
             }
           },
+         
           updateEmail(email: Email) {
             axios.put(`http://localhost:3000/emails/${email.id}`, email)
           },
@@ -84,9 +90,33 @@ export const emailStore = defineStore('main', {
               } else {
                 this.emailSelection.push(email)
               }
+            },
+            clear() {
+              this.emailSelection = [];
+            },
+            addMultiple(newEmails: Email[]) {
+              newEmails.forEach((email) => {
+                this.emailSelection.push(email)
+              })
+            },
+            forSelected(fn) {
+              this.emailSelection.forEach((email) => {
+                fn(email);
+                axios.put(`http://localhost:3000/emails/${email.id}`, email)
+              })
+            },
+            markRead() { this.forSelected(e => e.read = true)},
+            markUnread() { this.forSelected(e => e.read = false)},
+            archive() { this.forSelected(e => e.archived = !e.archived); this.emailSelection = []; },
+            bulkSelect() {
+              if(this.allEmailsSelected) {
+                this.emailSelection = [];
+              } else {
+                this.addMultiple(this.filteredEmails);
             }
+          }
         }
-      }
+        }
           
 
 )

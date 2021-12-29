@@ -38,8 +38,6 @@
   import MailView from './MailView.vue';
   import ModalView from './ModalView.vue';
   import BulkActionBar from './BulkActionBar.vue';
-  import { reactive, ref } from 'vue';
-  import useEmailSelection from '../composables/use-email-selection';
   import { Email, emailStore } from '../stores/emailStore';
   import { storeToRefs } from 'pinia';
       const store = emailStore()
@@ -48,6 +46,3 @@
     
       
 </script>
-
-<style scoped>
-</style>
