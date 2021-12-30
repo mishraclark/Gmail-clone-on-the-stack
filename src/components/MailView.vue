@@ -1,14 +1,14 @@
 <template>
   <div class="text-left">
     <div>
-      <button class="btn" @click="toggleArchive">{{store.openedEmail.archived ? 'Move to Inbox (e)' : 'Archive (e)'}}</button>
-      <button class="btn" @click="toggleRead">{{store.openedEmail.read ? 'Mark Unread (r)' : 'Mark Read (r)'}}</button>
+      <button class="btn" @click="toggleArchive">{{openedEmail.archived ? 'Move to Inbox (e)' : 'Archive (e)'}}</button>
+      <button class="btn" @click="toggleRead">{{openedEmail.read ? 'Mark Unread (r)' : 'Mark Read (r)'}}</button>
       <button class="btn" @click="goNewer">Newer (k)</button>
       <button class="btn" @click="goOlder">Older (j)</button>
     </div>
-    <h2>Subject: <strong>{{store.openedEmail.subject}}</strong></h2>
-    <div><em>From {{store.openedEmail.from}} on {{format(new Date(store.openedEmail.sentAt), 'MMM do yyyy')}}</em></div>
-    <div>{{store.openedEmail.body}}</div>
+    <h2>Subject: <strong>{{openedEmail.subject}}</strong></h2>
+    <div><em>From {{openedEmail.from}} on {{format(new Date(openedEmail.sentAt), 'MMM do yyyy')}}</em></div>
+    <div>{{openedEmail.body}}</div>
   </div>
 </template>
 

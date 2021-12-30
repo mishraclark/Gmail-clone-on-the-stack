@@ -106,7 +106,7 @@ export const emailStore = defineStore('main', {
             markUnread() { this.forSelected(e => e.read = false)},
             archive() { this.forSelected(e => e.archived = !e.archived); this.emailSelection = []; },
             bulkSelect() {
-              if(this.allEmailsSelected) {
+              if(this.emailSelection.length === this.filteredEmails.length) {
                 this.emailSelection = [];
               } else {
                 this.addMultiple(this.filteredEmails);

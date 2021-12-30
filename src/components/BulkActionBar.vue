@@ -20,7 +20,7 @@
       <button class="btn" 
               @click="store.archive"
               :disabled="store.numberSelected === 0">
-        Archive
+        {{selectedScreen === 'inbox' ? 'Archive' : 'Unarchive' }}
       </button>
     </span>
   </div>
