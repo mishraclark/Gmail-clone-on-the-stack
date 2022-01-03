@@ -1,4 +1,3 @@
-import { Email } from './emailStore';
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
